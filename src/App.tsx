@@ -1,18 +1,38 @@
-import { Button } from 'components';
+import { useState } from 'react';
+import { Button, Image } from 'components';
+import { getRandomImage } from 'services/image';
 import './App.scss';
 
 function App() {
+  const [images, setImages] = useState<string[]>([]);
+
   const onAddImage = () => {
-    console.log('Add Image');
+    getRandomImage().then((res) => {
+      setImages((prev) => {
+        return prev.concat([res]);
+      });
+    });
   };
 
   const onRemoveRandomImage = () => {
-    console.log('Remove Image');
+    const indexToRemove = Math.floor(
+      Math.random() * Math.floor(images.length - 1)
+    );
+    setImages((prev) => {
+      const newImages = [...prev];
+      newImages.splice(indexToRemove, 1);
+      return newImages;
+    });
   };
 
   return (
     <div className="App">
-      Hello World
+      <div>
+        {images.map((image, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <Image key={index} src={image} />
+        ))}
+      </div>
       <div>
         <Button onClick={onAddImage}>Add</Button>
         <Button onClick={onRemoveRandomImage}>Remove</Button>
