@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import styles from './style.module.scss';
 
 type ButtonProps = {
   children: ReactNode;
@@ -12,7 +13,7 @@ export default function Button({ children, onClick }: ButtonProps) {
   };
 
   return (
-    <button type="submit" onClick={onButtonClick}>
+    <button className={styles.Button} type="submit" onClick={onButtonClick}>
       {children}
     </button>
   );
