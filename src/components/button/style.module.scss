@@ -19,13 +19,22 @@
   
   text-align: center;
   text-transform: none;
-  transition: color .13s ease-in-out, background-color .13s ease-in-out, opacity .13s ease-in-out, box-shadow .13s ease-in-out;
+  transition: width .13s ease-in-out, color .13s ease-in-out, background-color .13s ease-in-out, opacity .13s ease-in-out, box-shadow .13s ease-in-out;
 
   &:active {
     background-color: #006AE8;
   }
+
+  &:disabled {
+    background-color: #6e9eda;
+    pointer-events: none;
+  }
   
   &:hover {
     background-color: #1C84FF;
+  }
+
+  div:first-of-type {
+    margin-right: 0.30rem;
   }
 }

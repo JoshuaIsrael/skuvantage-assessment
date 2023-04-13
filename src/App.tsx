@@ -10,18 +10,22 @@ export type ImageDetails = {
 
 function App() {
   const [images, setImages] = useState<ImageDetails[]>([]);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
 
   const onAddImage = () => {
-    getRandomImage().then((res) => {
-      setImages((prev) => {
-        return prev.concat([
-          {
-            id: Math.random().toString(),
-            src: res,
-          },
-        ]);
-      });
-    });
+    setIsFetching(true);
+    getRandomImage()
+      .then((res) => {
+        setImages((prev) => {
+          return prev.concat([
+            {
+              id: Math.random().toString(),
+              src: res,
+            },
+          ]);
+        });
+      })
+      .finally(() => setIsFetching(false));
   };
 
   const onRemoveRandomImage = () => {
@@ -43,7 +47,9 @@ function App() {
         ))}
       </div>
       <div className={styles.Actions}>
-        <Button onClick={onAddImage}>Add</Button>
+        <Button isLoading={isFetching} onClick={onAddImage}>
+          Add
+        </Button>
         <Button onClick={onRemoveRandomImage}>Remove</Button>
       </div>
     </div>
