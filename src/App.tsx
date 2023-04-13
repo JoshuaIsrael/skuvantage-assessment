@@ -45,7 +45,7 @@ function App() {
     <div className={styles.App}>
       <div>
         {images.map(({ id, src }) => (
-          <Image key={id} src={src} />
+          <Image key={id} src={src} alt="A random image" />
         ))}
       </div>
       <div className={styles.Actions}>
