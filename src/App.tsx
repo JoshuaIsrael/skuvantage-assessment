@@ -1,15 +1,25 @@
 import { useState } from 'react';
 import { Button, Image } from 'components';
 import { getRandomImage } from 'services/image';
-import './App.scss';
+import styles from './App.module.scss';
+
+export type ImageDetails = {
+  id: string;
+  src: string;
+};
 
 function App() {
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<ImageDetails[]>([]);
 
   const onAddImage = () => {
     getRandomImage().then((res) => {
       setImages((prev) => {
-        return prev.concat([res]);
+        return prev.concat([
+          {
+            id: Math.random().toString(),
+            src: res,
+          },
+        ]);
       });
     });
   };
@@ -26,14 +36,13 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className={styles.App}>
       <div>
-        {images.map((image, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <Image key={index} src={image} />
+        {images.map(({ id, src }) => (
+          <Image key={id} src={src} />
         ))}
       </div>
-      <div>
+      <div className={styles.Actions}>
         <Button onClick={onAddImage}>Add</Button>
         <Button onClick={onRemoveRandomImage}>Remove</Button>
       </div>
