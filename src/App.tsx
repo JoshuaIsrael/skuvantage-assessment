@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Button, Image } from 'components';
 import { getRandomImage } from 'services/image';
 import styles from './App.module.scss';
@@ -11,6 +11,8 @@ export type ImageDetails = {
 function App() {
   const [images, setImages] = useState<ImageDetails[]>([]);
   const [isFetching, setIsFetching] = useState<boolean>(false);
+
+  const hasNoImage: boolean = useMemo(() => images.length === 0, [images]);
 
   const onAddImage = () => {
     setIsFetching(true);
@@ -47,10 +49,12 @@ function App() {
         ))}
       </div>
       <div className={styles.Actions}>
-        <Button isLoading={isFetching} onClick={onAddImage}>
-          Add
+        <Button onClick={onAddImage} isLoading={isFetching}>
+          Add image
         </Button>
-        <Button onClick={onRemoveRandomImage}>Remove</Button>
+        <Button onClick={onRemoveRandomImage} disabled={hasNoImage}>
+          Remove random image
+        </Button>
       </div>
     </div>
   );
